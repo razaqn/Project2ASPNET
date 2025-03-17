@@ -1,14 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Web;
 
 namespace Project2.Models
 {
     public class Event
     {
         private Koneksi koneksi;
-        
+
         public Event()
         {
             koneksi = new Koneksi();
