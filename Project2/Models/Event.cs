@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Web;
+using System.Data.SqlClient;
 
 namespace Project2.Models
 {
     public class Event
     {
         private Koneksi koneksi;
-
+        
         public Event()
         {
             koneksi = new Koneksi();
@@ -115,6 +113,31 @@ namespace Project2.Models
             {
                 koneksi.CloseConnection();
             }
+        }
+
+        public DataTable Search(string searchTerm)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Events WHERE EventName LIKE @SearchTerm OR Description LIKE @SearchTerm OR Location LIKE @SearchTerm", koneksi.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@SearchTerm", "%" + searchTerm + "%");
+                    
+                    koneksi.OpenConnection();
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    sda.Fill(dt);
+                }
+            }
+            catch (Exception)
+            {
+                dt = null;
+            }
+            finally
+            {
+                koneksi.CloseConnection();
+            }
+            return dt;
         }
     }
 }
