@@ -23,6 +23,11 @@ namespace Project2.Models
             return con;
         }
 
+        public static string GetConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+        }
+
         public void OpenConnection()
         {
             if (con.State == ConnectionState.Closed)

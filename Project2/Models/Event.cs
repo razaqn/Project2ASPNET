@@ -14,16 +14,18 @@ namespace Project2.Models
             koneksi = new Koneksi();
         }
 
-        public bool Create(string eventName, string description, DateTime eventDate, string location, string status)
+        public bool Create(string eventName, string description, DateTime eventDate, string location,int Price, int Capacity,  string status)
         {
             try
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Events (EventName, Description, EventDate, Location, Status) VALUES (@EventName, @Description, @EventDate, @Location, @Status)", koneksi.GetConnection()))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Events (EventName, EventDescription, EventDate, Location, Price, Capacity, Status) VALUES (@EventName, @Description, @EventDate, @Location, @Price, @Capacity, @Status)", koneksi.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@EventName", eventName);
                     cmd.Parameters.AddWithValue("@Description", description);
                     cmd.Parameters.AddWithValue("@EventDate", eventDate);
                     cmd.Parameters.AddWithValue("@Location", location);
+                    cmd.Parameters.AddWithValue("@Price", Price);
+                    cmd.Parameters.AddWithValue("@Capacity", Capacity);
                     cmd.Parameters.AddWithValue("@Status", status);
 
                     koneksi.OpenConnection();
@@ -64,18 +66,19 @@ namespace Project2.Models
             return dt;
         }
 
-        public bool Update(int eventId, string eventName, string description, DateTime eventDate, string location, string status)
+        public bool Update(int eventId, string eventName, string description, DateTime eventDate, string location, int Price, int Capacity)
         {
             try
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET EventName = @EventName, Description = @Description, EventDate = @EventDate, Location = @Location, Status = @Status WHERE EventId = @EventId", koneksi.GetConnection()))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Events SET EventName = @EventName, EventDescription = @Description, EventDate = @EventDate, Location = @Location, Price = @Price, Capacity = @Capacity WHERE EventId = @EventId", koneksi.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@EventId", eventId);
                     cmd.Parameters.AddWithValue("@EventName", eventName);
                     cmd.Parameters.AddWithValue("@Description", description);
                     cmd.Parameters.AddWithValue("@EventDate", eventDate);
                     cmd.Parameters.AddWithValue("@Location", location);
-                    cmd.Parameters.AddWithValue("@Status", status);
+                    cmd.Parameters.AddWithValue("@Price", Price);
+                    cmd.Parameters.AddWithValue("@Capacity", Capacity);
 
                     koneksi.OpenConnection();
                     cmd.ExecuteNonQuery();
